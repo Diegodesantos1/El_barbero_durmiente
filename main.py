@@ -90,3 +90,8 @@ class Peluqueria:  # Creamos la clase Peluqueria
             peluquero.despertarse() # Llamamos al método despertarse del peluquero
 
 
+class Cliente: # Creamos la clase Cliente
+    def __init__(self, nombre): # Creamos el constructor de la clase Cliente
+        self.nombre = nombre # Creamos un atributo para el nombre del cliente
+
+
