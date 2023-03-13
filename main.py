@@ -112,3 +112,20 @@ class Peluquero: # Creamos la clase Peluquero
         time.sleep(duracion_corte_pelo_random) # Esperamos la duración del corte de pelo
         print(f"{cliente.nombre} ha terminado") # Imprime el mensaje
 
+
+if __name__ == "__main__":
+    clientes = [] # Creamos una lista para los clientes
+    numero_clientes = int(input(Fore.GREEN +"Introduce el número de clientes: ")) # Introducimos el número de clientes
+    for i in range(numero_clientes): # Para cada cliente
+        nombre_cliente = str(input("Introduce el nombre del cliente: ")) # Introducimos el nombre del cliente
+        clientes.append(Cliente(nombre_cliente)) # Añadimos el cliente a la lista de clientes
+    peluquero = Peluquero() # Creamos un peluquero
+    numero_asientos = int(input("Introduce el número de asientos: ")); print(Fore.WHITE + "-"*50) # Introducimos el número de asientos
+    Peluqueria = Peluqueria(peluquero, numero_asientos) # Creamos una peluquería
+    Peluqueria.abierto() # Llamamos al método abierto de la peluquería
+    while len(clientes) > 0: # Mientras el número de clientes sea mayor que 0
+        cliente = clientes.pop() # El cliente es el último cliente de la lista
+        Peluqueria.entrar_peluqueria(cliente) # Llamamos al método entrar_peluqueria de la peluquería
+        customerInterval = random.randrange(
+            intervalo_clientes, intervalo_clientes_max+1) # Creamos una variable para el intervalo de clientes
+        time.sleep(customerInterval) # Esperamos el intervalo de clientes
