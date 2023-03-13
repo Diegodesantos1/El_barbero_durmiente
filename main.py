@@ -40,3 +40,53 @@ while duracion_corte_pelo > duracion_corte_pelo_max:
     duracion_corte_pelo_max = int(
         input("Introduce el tiempo máximo de corte de pelo: "))
 
+
+class Peluqueria:  # Creamos la clase Peluqueria
+    clientes_esperando = []  # Creamos una lista para los clientes que están esperando
+
+    # Creamos el constructor de la clase Peluqueria
+    def __init__(self, peluquero, numero_asientos):
+        self.peluquero = peluquero  # Creamos un atributo para el peluquero
+        # Creamos un atributo para el número de asientos
+        self.numero_asientos = numero_asientos # Creamos un atributo para el número de asientos
+        print(Fore.LIGHTMAGENTA_EX + f"Peluquero iniciado con {numero_asientos} sitios") # Imprime el mensaje
+        print(f"Mínimo intervalo de Clientes {intervalo_clientes}") # Imprime el mensaje
+        print(f"Máximo intervalo de Clientes {intervalo_clientes_max}") # Imprime el mensaje
+        print(f"Tiempo mínimo de corte de pelo {duracion_corte_pelo}") # Imprime el mensaje
+        print(f"Tiempo máximo de corte de pelo {intervalo_clientes_max}") # Imprime el mensaje
+        print(Fore.WHITE + "-"*50) # Imprime el mensaje y resetea los colores
+
+    def abierto(self): # Creamos el método peluquería abierta
+        print("La peluquería se está abriendo") # Imprime el mensaje
+        hilo = Thread(target=self.peluquero_trabajar) # Creamos un hilo para el método peluquero_trabajar
+        hilo.start() # Iniciamos el hilo
+
+    def peluquero_trabajar(self): # Creamos el método peluquero_trabajar
+        while True: # Mientras sea cierto
+            mutex.acquire() # Bloqueamos el mutex
+
+            if len(self.clientes_esperando) > 0: # Si el número de clientes esperando es mayor que 0
+                cliente = self.clientes_esperando[0] # El cliente es el primer cliente de la lista
+                del self.clientes_esperando[0] # Eliminamos el primer cliente de la lista
+                mutex.release() # Desbloqueamos el mutex
+                self.peluquero.cortar_pelo(cliente) # Llamamos al método cortar_pelo del peluquero
+            else: # Si no
+                mutex.release() # Desbloqueamos el mutex
+                print("No hay clientes, el peluquero se va a dormir") # Imprime el mensaje
+                peluquero.dormir() # Llamamos al método dormir del peluquero
+                print("El peluquero se ha despertado") # Imprime el mensaje
+
+    def entrar_peluqueria(self, cliente): # Creamos el método entrar_peluqueria
+        mutex.acquire() # Bloqueamos el mutex
+        print(f"{cliente.nombre} entró en la tienda y está buscando un sitio") # Imprime el mensaje
+
+        if len(self.clientes_esperando) == self.numero_asientos: # Si el número de clientes esperando es igual al número de asientos
+            print(f"La sala de espera está llena, {cliente.nombre} se va a marchar.") # Imprime el mensaje
+            mutex.release() # Desbloqueamos el mutex
+        else: # Si no
+            print(f"{cliente.nombre} se ha sentado en la sala de espera") # Imprime el mensaje
+            self.clientes_esperando.append(cliente) # Añadimos el cliente a la lista de clientes esperando
+            mutex.release() # Desbloqueamos el mutex
+            peluquero.despertarse() # Llamamos al método despertarse del peluquero
+
+
