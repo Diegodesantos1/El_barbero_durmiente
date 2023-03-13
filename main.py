@@ -95,3 +95,20 @@ class Cliente: # Creamos la clase Cliente
         self.nombre = nombre # Creamos un atributo para el nombre del cliente
 
 
+class Peluquero: # Creamos la clase Peluquero
+    peluquero_trabajando = Event() # Creamos un evento para el peluquero trabajando
+
+    def dormir(self): # Creamos el método dormir
+        self.peluquero_trabajando.wait() # Esperamos a que el evento sea cierto
+
+    def despertarse(self): # Creamos el método despertarse
+        self.peluquero_trabajando.set() # Establecemos el evento como cierto
+
+    def cortar_pelo(self, cliente): # Creamos el método cortar_pelo
+        self.peluquero_trabajando.clear() # Establecemos el evento como falso
+        print(f"A {cliente.nombre} le están cortando el pelo") # Imprime el mensaje
+        duracion_corte_pelo_random = random.randrange(
+            duracion_corte_pelo, duracion_corte_pelo_max+1) # Creamos una variable para la duración del corte de pelo
+        time.sleep(duracion_corte_pelo_random) # Esperamos la duración del corte de pelo
+        print(f"{cliente.nombre} ha terminado") # Imprime el mensaje
+
