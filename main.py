@@ -120,8 +120,7 @@ if __name__ == "__main__":
         nombre_cliente = str(input("Introduce el nombre del cliente: ")) # Introducimos el nombre del cliente
         clientes.append(Cliente(nombre_cliente)) # Añadimos el cliente a la lista de clientes
     peluquero = Peluquero() # Creamos un peluquero
-    numero_asientos = int(input("Introduce el número de asientos: ")); print(Fore.WHITE + "-"*50) # Introducimos el número de asientos
-    Peluqueria = Peluqueria(peluquero, numero_asientos) # Creamos una peluquería
+    Peluqueria = Peluqueria(peluquero, numero_asientos=1) # Creamos una peluquería
     Peluqueria.abierto() # Llamamos al método abierto de la peluquería
     while len(clientes) > 0: # Mientras el número de clientes sea mayor que 0
         cliente = clientes.pop() # El cliente es el último cliente de la lista
